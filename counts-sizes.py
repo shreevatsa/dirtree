@@ -83,19 +83,10 @@ def main():
     subtree = tree[root]
     out = []
     sums(root, subtree, out)
+    length = 1 + max(len(sizes) for (_path, sizes, _counts) in out)
     writer = csv.writer(sys.stdout)
-    headers = [
-        "path",
-        "count_total",
-        "size_total",
-        "count_1",
-        "size_1",
-        "count_2",
-        "size_2",
-        "count_3",
-        "size_3",
-        "count_4",
-        "size_4",
+    headers = ["path", "count_total", "size_total"] + [
+        item for i in range(1, length + 1) for item in (f"count_{i}", f"size_{i}")
     ]
     writer.writerow(headers)
     for path, sizes, counts in out:
